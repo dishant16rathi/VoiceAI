@@ -17,20 +17,71 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+        /* Overall container styling with flex */
         .block-container {
+            display: flex;
+            flex-direction: column;
             background-color: #ffffff;
-            border-top: 2px solid #ddd;
-            border-bottom: 2px solid #ddd;
-            border-left: 1px solid #ddd;
-            border-right: 1px solid #ddd;
+            border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
+            max-width: 600px;
             margin: auto;
-            padding: 20px 20px 40px 20px;
+            padding: 15px;
         }
-        .block-container h1, .block-container h2, .block-container h3, .block-container p {
+        
+        /* Reduced font sizes */
+        .block-container h1 {
+            font-size: 21px;
+            padding: 0 0 20px 0; border-bottom: 1px solid #000; margin-bottom: 20px;
+        }
+        .block-container h2 {
+            font-size: 15px;
+            margin-bottom: 8px;
+            padding:0;
+        }
+        .block-container h3 {
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+        .block-container p, .block-container li, .stTextInput > label, .stButton > button {
+            font-size: 10px;
+            margin-bottom: 6px;
+        }
+        
+        /* Make buttons smaller */
+        .stButton > button {
+            padding: 2px 30px;
+            display: inline-flex;
+            align-items: center; height: 24px;
+        }
+        .stButton > button p{
+            margin: 0; padding: 0; font-size: 12px; font-weight: 600;
+        }
+        /* Adjust input fields */
+        .stTextInput > div > div > input {
+            font-size: 0.9rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        /* Adjust message boxes (success, error, warning) */
+        .stAlert > div {
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        /* Section containers with flex */
+        .section-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             margin-bottom: 15px;
+        }
+        hr{
+            margin: 10px 0;
+        }
+        .st-emotion-cache-16tyu1 hr{
+            margin: 10px 0px 30px 0px;
         }
     </style>
     """,
@@ -44,7 +95,7 @@ st.title("📞 AI Voice Assistant - QX")
 st.header("🖥️ Server Status")
 st.markdown("Check if the server is running and available.")
 
-if st.button("🔍 Check Server Status", key="server-check"):
+if st.button("🔍 Check Server Status", key="server-check", type="secondary", use_container_width=True):
     try:
         response = requests.get(f"{API_BASE_URL}/")
         if response.status_code == 200:
@@ -70,7 +121,7 @@ def is_valid_phone(number):
     return bool(re.fullmatch(r"91\d{10}", number))
 
 # Call Now Button
-if st.button("📤 Call Now", key="call-now", type="secondary"):
+if st.button("📤 Call Now", key="call-now", type="secondary", use_container_width=True):
     if phone_number:
         if is_valid_phone(phone_number):
             try:
